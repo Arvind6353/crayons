@@ -1,7 +1,13 @@
-@import "../../styles/freshworks.scss";
-
 :host {
   display: none;
+}
+
+@media screen and (prefers-reduced-motion: reduce) {
+  :host(.is-open) {
+    display: block;
+    animation: none;
+    z-index: 999;
+  }
 }
 
 :host(.is-open) {
@@ -96,6 +102,12 @@
 
   100% {
     top: 10px;
+  }
+}
+
+@media screen and (prefers-reduced-motion: reduce) {
+  :host(.fade-out) {
+    animation: none;
   }
 }
 

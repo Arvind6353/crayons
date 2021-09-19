@@ -1,6 +1,3 @@
-@import "../../styles/freshworks";
-@import "../../styles/theme";
-
 /**
   @prop --input-color: Color of the textarea input
 **/
@@ -85,6 +82,14 @@ label {
     display: inline-block;
     color: var(--input-color);
 
+    @media screen and (prefers-reduced-motion: reduce) {
+      &:hover,
+      &:focus {
+        border: 1px var(--input-hover-color) solid;
+        transition: none;
+      }
+    }
+
     &:hover {
       border: 1px var(--input-hover-color) solid;
       transition: 0.2s linear;
@@ -102,7 +107,8 @@ label {
       background-color: var(--input-disabled-bg);
       border-style: solid;
 
-      &:hover {
+      &:hover,
+      &:focus {
         border: 1px solid var(--input-border);
         cursor: not-allowed;
       }

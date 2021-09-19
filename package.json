@@ -1,8 +1,8 @@
 {
-  "name": "@freshworks/crayons",
+  "name": "fw-crayons-mono",
   "repository": {
     "type": "git",
-    "url": "https://github.com/freshworks/crayons.git"
+    "url": "https://github.com/Arvind6353/crayons-mono.git"
   },
   "keywords": [
     "web-components",
@@ -11,11 +11,11 @@
     "typescript",
     "components"
   ],
-  "author": "Freshworks Inc",
-  "version": "2.13.2",
-  "description": "Crayons for Developer Platform",
-  "main": "dist/index.js",
-  "module": "dist/index.mjs",
+  "author": "Arvind",
+  "version": "0.0.1",
+  "description": "Crayons Wrapper for Developer Platform",
+  "main": "dist/index.cjs.js",
+  "module": "dist/custom-elements/index.js",
   "es2015": "dist/esm/index.mjs",
   "es2017": "dist/esm/index.mjs",
   "types": "dist/types/components.d.ts",
@@ -27,15 +27,18 @@
     "loader/"
   ],
   "scripts": {
-    "build:components": "stencil build --docs",
-    "build": "gulp && npm run build:components && npm run storybook:build && npm run docs:build",
+    "build:components": "stencil build --docs && npm run build:scss && npm run build:autoprefix && npm run build:min",
+    "build": "gulp && npm run build:components && npm run docs:build",
+    "build:autoprefix": "postcss dist/css/*.css --use autoprefixer --dir  dist/css/",
+    "build:min": "cleancss -b dist/css/*.css dist/css/",
+    "build:scss": "node-sass --include-path node_modules --include-path ../../node_modules --output-style compressed --recursive src/styles/global/ -o dist/css",
     "code-sanity": "npm run lint",
     "commit": "git-cz",
     "dev": "npm-run-all --parallel start storybook",
     "docs:build": "vuepress build src",
     "docs:dev": "npm run build:components && vuepress dev src",
     "generate": "plop",
-    "lint:styles": "stylelint 'src/**/*.scss' 'src/.vuepress/**/*.vue' --fix",
+    "lint:styles": "stylelint src/**/*.scss src/.vuepress/**/*.vue --fix",
     "lint:ts": "tslint -c tslint.json -p tsconfig.json -t grouped -s node_modules/custom-tslint-formatters/formatters --fix",
     "lint": "npm run lint:ts && npm run lint:styles",
     "local": "stencil build --serve --dev --watch",
@@ -51,8 +54,9 @@
     "@babel/core": "^7.13.16",
     "@semantic-release/changelog": "^5.0.1",
     "@semantic-release/git": "^9.0.0",
-    "@stencil/core": "1.9.2",
-    "@stencil/postcss": "^1.0.1",
+    "@stencil/core": "^2.8.1",
+    "@stencil/postcss": "^2.0.0",
+    "@stencil/react-output-target": "^0.1.0",
     "@stencil/sass": "^1.4.1",
     "@storybook/addon-a11y": "^6.2.9",
     "@storybook/addon-actions": "^6.2.9",
@@ -69,8 +73,8 @@
     "@types/puppeteer": "^5.4.3",
     "@vue/babel-preset-app": "^4.5.12",
     "@vuepress/plugin-active-header-links": "^1.8.2",
-    "autoprefixer": "^9.6.1",
     "babel-loader": "^8.2.2",
+    "clean-css-cli": "^5.3.3",
     "commitizen": "^4.2.4",
     "copy-webpack-plugin": "^6.4.1",
     "custom-tslint-formatters": "^2.4.0",
@@ -85,6 +89,8 @@
     "node-sass": "^5.0.0",
     "npm-run-all": "^4.1.5",
     "plop": "^2.7.4",
+    "postcss": "^8.3.6",
+    "postcss-cli": "^8.3.1",
     "puppeteer": "5.2.1",
     "react": "^17.0.2",
     "react-docgen-typescript-loader": "^3.7.2",
@@ -130,7 +136,7 @@
     "access": "public"
   },
   "bugs": {
-    "url": "https://github.com/freshworks/crayons/issues"
+    "url": "https://github.com/Arvind6353/crayons-mono/issues"
   },
-  "homepage": "https://github.com/freshworks/crayons#readme"
+  "homepage": "https://github.com/Arvind6353/crayons-mono#readme"
 }

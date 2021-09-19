@@ -1,5 +1,3 @@
-@import "../../styles/freshworks";
-
 :host {
   position: relative;
 
@@ -92,7 +90,8 @@
   float: right;
 }
 
-.mdpchb-inner:hover {
+.mdpchb-inner:hover,
+.mdpchb-inner:focus {
   cursor: pointer;
   background: var(--color-smoke-50);
 }
@@ -149,7 +148,7 @@
 
 .mdpchbi-left-arrows::after,
 .mdpchbi-right-arrows::after {
-  content: '';
+  content: "";
   left: 3px;
   top: -5px;
 }
@@ -256,7 +255,8 @@
   text-align: center;
 }
 
-.cdc-day span:hover {
+.cdc-day span:hover,
+.cdc-day span:focus {
   cursor: pointer;
   background: var(--color-smoke-50);
 }

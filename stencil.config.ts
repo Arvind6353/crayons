@@ -1,12 +1,15 @@
 import { Config } from '@stencil/core';
-import { postcss } from '@stencil/postcss';
+import { reactOutputTarget } from '@stencil/react-output-target';
 import { sass } from '@stencil/sass';
-import autoprefixer from 'autoprefixer';
+
+// import { postcss } from '@stencil/postcss';
+// import autoprefixer from 'autoprefixer';
 
 import { generateJsonDocs } from './customElementDocGenerator';
 
 export const config: Config = {
-  namespace: 'crayons',
+  autoprefixCss: true,
+  namespace: 'crayons-mono',
   outputTargets: [
     {
       type: 'dist',
@@ -17,6 +20,12 @@ export const config: Config = {
       footer: 'Built with ❤ at Freshworks',
     },
     {
+      type: 'dist-custom-elements',
+    },
+    {
+      type: 'dist-custom-elements-bundle',
+    },
+    {
       type: 'custom',
       generator: generateJsonDocs,
       name: 'custom-element-docs',
@@ -24,14 +33,28 @@ export const config: Config = {
     {
       type: 'www',
       dir: 'src/.vuepress/public/www/',
-      serviceWorker: null, // disable service workers
     },
-  ],
-  plugins: [
-    sass(),
-    postcss({
-      plugins: [autoprefixer()],
+    reactOutputTarget({
+      componentCorePackage: 'fw-crayons-mono',
+      proxiesFile: '../crayons-react/src/components.ts',
+
+      // lazy load -> code splitting
+      // includeDefineCustomElements: true,
+      // includePolyfills: true,
+
+      // tree shakable, need to use setassetpath
+      customElementsDir: 'dist/components',
+      includeImportCustomElements: true,
     }),
+  ],
+  globalStyle: 'src/styles/global/freshworks.scss',
+  plugins: [
+    sass({
+      injectGlobalPaths: ['src/styles/index.scss'],
+    }),
+    // postcss({
+    //   plugins: [autoprefixer()],
+    // }),
   ],
   testing: {
     moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
@@ -48,4 +71,17 @@ export const config: Config = {
     ],
     coverageReporters: ['json', 'lcov', 'text', 'clover', 'text-summary'],
   },
+  buildEs5: true,
+  extras: {
+    appendChildSlotFix: true,
+    cssVarsShim: true,
+    dynamicImportShim: true,
+    initializeNextTick: true,
+    safari10: true,
+    scriptDataOpts: true,
+    shadowDomShim: true,
+    cloneNodeFix: true,
+    slotChildNodesFix: true,
+  },
+  enableCache: true,
 };
